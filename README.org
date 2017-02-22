@@ -20,10 +20,23 @@
    #+BEGIN_SRC python
      IMAGES_STORE = '/home/samray/Images'
    #+END_SRC
-   3. 在根目录有是一个QQ_for_crawl.txt的文件，在文本上输入你需要爬取的好友的qq号
+   3. 安装 [[https://scrapy.org/][scrapy]]
+   #+BEGIN_SRC python
+     pip install scrapy
+   #+END_SRC
+   4. 在根目录有是一个QQ_for_crawl.txt的文件，在文本上输入你需要爬取的好友的qq号
    每行一个号码，然后在项目的根目录下面 输入命令行 scrapy crawl qq
-   4. 输入你的qq 帐号和密码，截图如下：
+   5. 输入你的qq 帐号和密码，截图如下：
       [[./images/qzone_picture_spider.png]]
+** 运行结果
+   因为好友图片和QQ 号码涉及好友隐私，所以就不上图了。
+   爬取速度会受网络环境的影响，考虑到网络，稳定等因素，我自身的网络环境，
+   运行一个小时，大概爬取了30000+的图片，不同环境，速度很自然不一样
+*** 备注
+    在分析qq 空间图片的时候，我发现，在5年以前的图片，上传到QQ 空间以后，是没有
+    原图的了，但是近2年上传的图片是有原图，个人猜测，可能是因为，以前等宽和存储
+    设备等费用比较高昂，所以QQ 空间就没有保存原图，后来或许是因为成本或者是技术等
+    因素，又保存了原图。所以爬取的时候，我是尽量先爬取原图，没有原图，再爬取缩略图
 ** 参考
    致谢：
    [[http://blog.csdn.net/bone_ace/article/details/50771839]]
