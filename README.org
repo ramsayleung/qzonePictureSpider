@@ -22,4 +22,10 @@
    #+END_SRC
    3. 在根目录有是一个QQ_for_crawl.txt的文件，在文本上输入你需要爬取的好友的qq号
    每行一个号码，然后在项目的根目录下面 输入命令行 scrapy crawl qq
-
+   4. 输入你的qq 帐号和密码，截图如下：
+      [[./images/qzone_picture_spider.png]]
+** 参考
+   致谢：
+   [[http://blog.csdn.net/bone_ace/article/details/50771839]]
+   [[http://blog.csdn.net/gsls200808/article/details/48209917]]
+    
