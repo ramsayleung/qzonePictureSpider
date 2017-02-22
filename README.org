@@ -1,0 +1,25 @@
+* 好友QQ空间图片爬虫
+** 爬虫功能
+   QQSpider 爬取好友qq 空间的图片。因为QQ空间要先登录才能进行数据爬取，所以你需要
+   一个登录帐户和若干个你需要爬取的若干个好友的QQ号。需要提醒的是，爬虫不是hacker 
+   tools,是没有办法爬取到你没有权限查看的好友的照片的，希望理解
+** 环境，架构
+   开发语言：python2.7
+   开发环境：64位Linux(Korora)
+   开发工具：Emacs25.1
+   开发框架：scrapy
+   其它：使用selenium,PhantomJs 抓取cookie
+** 使用说明
+   1. 安装 [[http://phantomjs.org/download.html][phantomJs]] 并在 *get_cookie.py* 里面的
+   #+BEGIN_SRC python
+     browser = webdriver.PhantomJS(
+         executable_path="/usr/local/bin/phantomjs")
+   #+END_SRC
+   */usr/local/bin/phantomjs* 更改为你的phantomJs 的安装目录
+   2. 更改 *setting.py* 里面的IMAGRS_STORE 变量，改成你要存储的图片的路径
+   #+BEGIN_SRC python
+     IMAGES_STORE = '/home/samray/Images'
+   #+END_SRC
+   3. 在根目录有是一个QQ_for_crawl.txt的文件，在文本上输入你需要爬取的好友的qq号
+   每行一个号码，然后在项目的根目录下面 输入命令行 scrapy crawl qq
+
