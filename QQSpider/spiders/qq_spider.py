@@ -1,18 +1,19 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-from scrapy.spiders import CrawlSpider
-# from scrapy.selector import Selector
-# from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
-from scrapy.http import Request
-import get_cookie
-import get_gtk
+#!/usr/bin/env python3
+# # -*- coding: utf-8 -*-
+# author:Samray <samrayleung@gmail.com>
+
 import fileinput as fileinput
-import sys
 import json
-from QQSpider.items import QqspiderItem
-import init
-from pprint import pprint
 import logging
+import sys
+from pprint import pprint
+
+from scrapy.http import Request
+from scrapy.spiders import CrawlSpider
+
+# import init
+from QQSpider.items import QqspiderItem
+from QQSpider.spiders import get_cookie, get_gtk, init
 
 
 class QQSpider(CrawlSpider):
@@ -50,24 +51,18 @@ class QQSpider(CrawlSpider):
     def parse(self, response):
         item = response.meta['item']
         account_for_crawl = item['account']
-        response_json = response.body
-        # 将得到的请求结果保存到文件
-        with open("response.txt", "wt") as tmpWrite:
-            tmpWrite.write(response_json)
-            # 对response进行修改，变成标准的json文件
-        self.replaceAll("response.txt", "shine0_Callback({", "{")
-        self.replaceAll("response.txt", ");", "")
-        with open("response.txt") as data_file:
-            json_formatted = json.load(data_file)
-        pprint(json_formatted)
-        # album_list_num = len(json_formatted["data"]["albumListModeSort"])
+        response_json = response.text
+        # 对response进行修改，变成标准的json文件
+        response_json = response_json.replace("shine0_Callback(", "")
+        response_json = response_json.replace(");", "")
+        json_formatted = json.loads(response_json)
         try:
             for album_list in json_formatted["data"]["albumList"]:
                 album_id = album_list['id']
                 total_photo = album_list['total']
                 print(album_id, total_photo)
 
-                #qq空间最多只会返回200条数据
+                # qq空间最多只会返回200条数据
                 image_counter = 0
                 while image_counter < total_photo:
                     image_url = "http://h5.qzone.qq.com/webapp/json/mqzone_photo/getPhotoList2?g_tk={0}&uin={1}&albumid={2}&ps={3}&pn={4}&password=&password_cleartext=0&swidth=1920&sheight=1080&sid=Pp7O26sWwPQbVfSPlzR0XBaL7ZpyXD9D33d842420201%3D%3D".format(
@@ -79,7 +74,7 @@ class QQSpider(CrawlSpider):
                         callback=self.parse_image,
                         meta={'item': item},
                         cookies=self.cookie, )
-            #如果相册数太大，一次没法请求完，继续请求
+            # 如果相册数太大，一次没法请求完，继续请求
             album_total = json_formatted["data"]["albumsInUser"]
             album_next_page = json_formatted["data"]["nextPageStart"]
             if album_total != album_next_page:
@@ -115,10 +110,3 @@ class QQSpider(CrawlSpider):
 
         except KeyError:
             logging.error("你的登陆账号没有权限查看该账号的该相册")
-
-    def replaceAll(self, filename, searchExp, replaceExp):
-        for line in fileinput.input(files=(filename), inplace=1):
-            # for line in f:
-            if searchExp in line:
-                line = line.replace(searchExp, replaceExp)
-            sys.stdout.write(line)

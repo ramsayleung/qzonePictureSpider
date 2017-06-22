@@ -11,10 +11,11 @@ class GetGtk(object):
             return int(value & sys.maxint)
 
     def LeftShiftInt(self, number, step):  # 由于左移可能自动转为long型，通过这个转回来
-        if isinstance((number << step), long):
-            return int((number << step) - 0x200000000L)
-        else:
-            return int(number << step)
+        return number << step
+        # if isinstance((number << step), long):
+        #     return int((number << step) - 0x200000000L)
+        # else:
+        #     return int(number << step)
 
     def getOldGTK(self, skey):
         a = 5381
