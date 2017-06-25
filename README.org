@@ -1,3 +1,5 @@
+* Update 2017-6-25
+  QQ 空间使用了新的加密方式，原来的破解已经失效
 * 好友QQ空间图片爬虫
 ** 爬虫功能
    QQSpider 爬取好友qq 空间的图片。因为QQ空间要先登录才能进行数据爬取，所以你需要
@@ -41,4 +43,5 @@
    致谢：
    [[http://blog.csdn.net/bone_ace/article/details/50771839]]
    [[http://blog.csdn.net/gsls200808/article/details/48209917]]
+   
     
